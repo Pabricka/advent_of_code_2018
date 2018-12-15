@@ -1,6 +1,7 @@
 def checksum():
     f = open("input2.txt", "r")
     lines = f.readlines()
+    f.close()
 
     doubleDigits = 0
     tripleDigits = 0
@@ -42,6 +43,7 @@ def checksum():
 def correct_box():
     f = open("input2.txt", "r")
     lines = f.readlines()
+    f.close()
     answer = ""
     for i, line in enumerate(lines):
         for j, line2 in enumerate(lines):

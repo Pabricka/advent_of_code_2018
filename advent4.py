@@ -10,6 +10,7 @@ def sleepiest_guard():
 
     f = open("input4.txt", "r")
     lines = f.readlines()
+    f.close()
     lines.sort()
 
     guards = []
@@ -26,7 +27,6 @@ def sleepiest_guard():
             new = False
         if new:
             guards.append(Guard(l.split(" ")[3]))
-        print(l)
 
     # lets check how much they sleep
     current_guard = None
@@ -45,7 +45,6 @@ def sleepiest_guard():
                     while fell_asleep<minutes:
                         g.minutes[fell_asleep] += 1
                         fell_asleep += 1
-                    print(" so far " + g.guard_id + " has slept " + str(g.time_slept))
 
     # who slept most?
 
@@ -56,13 +55,27 @@ def sleepiest_guard():
         print("Guard number " + g.guard_id + " slept for " + str(g.time_slept) + " minutes")
     print("Guard number " + sleepyhead.guard_id + " was the most sleepiest by "
           + str(sleepyhead.time_slept) + " minutes!")
+
     finest_minute = 0
     index = 0
+
     for i, m in enumerate(sleepyhead.minutes):
         if m > finest_minute:
             finest_minute = m
             index = i
-    print("They are probaply sleep at 00:" + str(index))
+    print("They are probably sleep at 00:" + str(index))
+
+    finest_minute = 0
+    times = 0
+    guard = guards[0]
+    for m in range(60):
+        for g in guards:
+            if g.minutes[m] > times:
+                print(g.guard_id + " sleeps at minute " + str(m) + " " + str(g.minutes[m]) + " times")
+                times = g.minutes[m]
+                finest_minute = m
+                guard = g
+    print(guard.guard_id + " is most frequently asleep at " + str(finest_minute))
 
 
 sleepiest_guard()

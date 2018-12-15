@@ -1,6 +1,7 @@
 def squares_that_intersect():
     f = open("input3.txt", "r")
     lines = f.readlines()
+    f.close()
 
     fabric = [[0 for i in range(1000)] for j in range(1000)]
 
@@ -34,6 +35,7 @@ def claim_that_doesnt_overlap(fabric):
 
     f = open("input3.txt", "r")
     lines = f.readlines()
+    f.close()
 
     for line in lines:
         first = line.find("@")

@@ -1,6 +1,7 @@
 def frequency_after_all_changes():
     f = open("input1.txt", "r")
     lines = f.readlines()
+    f.close()
     answer = 0
     for i, line in enumerate(lines):
         answer += int(line)
@@ -14,6 +15,7 @@ def first_frequency_that_appears_twice():
     current = 0
     f = open("input1.txt", "r")
     lines = f.readlines()
+    f.close()
 
     found = False
 

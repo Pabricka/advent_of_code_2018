@@ -3,6 +3,7 @@ class Step:
     def __init__(self, step, prerequisite):
         self.step = step
         self.prerequisites = [prerequisite]
+        self.time = 60 + ord(step.lower()) - 96
 
 
 def correct_order():
@@ -12,6 +13,9 @@ def correct_order():
 
     remaining_steps = []
     done_steps = [None]
+
+    in_doing = []
+
     for line in lines:
         step = line[36]
         prerequisite = line[5]
@@ -33,22 +37,43 @@ def correct_order():
             if new and pre is not None:
                 remaining_steps.append(Step(pre, None))
     for r in remaining_steps:
-        print(r.step)
+        print("step " + r.step)
+        print("prerequisites are: ")
         print(r.prerequisites)
+        print("this step will take " + str(r.time) + " seconds")
 
-    while len(remaining_steps) > 0:
+    time_lapsed = 0
+    while len(remaining_steps) > 0 or len(in_doing) > 0:
         n = next_step(remaining_steps, done_steps)
-        print(n)
-        done_steps.append(n)
-        for r in remaining_steps:
-            if r.step == n:
-                remaining_steps.remove(r)
+        if len(in_doing) < 5 and n is not -1:
+            print("lets do " + n.step)
+            in_doing.append(n)
+            for r in remaining_steps:
+                if r.step == n.step:
+                    remaining_steps.remove(r)
+                    break
+        else:
+            if len(in_doing) == 0:
                 break
+            print("time is moving forward....")
+            shortest = in_doing[0]
+            for d in in_doing:
+                if shortest.time > d.time:
+                    shortest = d
+            for d in in_doing:
+                if d.step != shortest.step:
+                    d.time -= shortest.time
+            time_lapsed += shortest.time
+            print("done: " + shortest.step + " it took " + str(shortest.time) + " seconds")
+            done_steps.append(shortest.step)
+            in_doing.remove(shortest)
+
     order = ""
+    print(time_lapsed)
     del done_steps[0]
     for d in done_steps:
         order += d
-    print(order)
+    print("steps were done in order: " + order)
 
 
 def next_step(remaining_steps, done_steps):
@@ -66,11 +91,10 @@ def next_step(remaining_steps, done_steps):
                 can_be_done = False
                 break
         if can_be_done:
-            possible.append(s.step)
+            possible.append(s)
 
     if len(possible) > 0:
-        print(possible)
-        return sorted(possible)[0]
+        return sorted(possible, key=lambda x: x.step)[0]
     else:
         return -1
 

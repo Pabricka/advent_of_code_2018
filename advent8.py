@@ -24,15 +24,12 @@ def metadata_value(data):
     for i in range(child_nodes):
         data_sum, data = metadata_value(data)
         values_of_children.append(data_sum)
-        print(values_of_children)
     if child_nodes == 0:
         for i in data[:metadata_entries]:
             data_sum_combined += int(i)
     else:
         for i in data[:metadata_entries]:
             if 0 < int(i) <= child_nodes:
-                print("meta: " + i)
-                print(values_of_children[int(i)-1])
                 data_sum_combined += values_of_children[int(i)-1]
     return data_sum_combined, data[metadata_entries:]
 
@@ -44,4 +41,4 @@ licence = metadata_sum(d)[0]
 print("license is: " + str(licence))
 
 licence = metadata_value(d)[0]
-print(licence)
+print("value of root is: " + str(licence))

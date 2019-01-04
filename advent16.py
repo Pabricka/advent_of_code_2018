@@ -244,11 +244,12 @@ def execute_test(lines, opcodes):
     return register[0]
 
 
-f = open("input16.txt", "r")
-lines = f.readlines()
-f = open("input16_2.txt", "r")
-lines2 = f.readlines()
-f.close()
-print("Answer to part 1: " + str(three_or_more_opcodes(lines)))
-op = number_of_opcodes(lines)
-print("Answer to part 2: " + str(execute_test(lines2, op)))
+if __name__ == '__main__':
+    f = open("input16.txt", "r")
+    lines = f.readlines()
+    f = open("input16_2.txt", "r")
+    lines2 = f.readlines()
+    f.close()
+    print("Answer to part 1: " + str(three_or_more_opcodes(lines)))
+    op = number_of_opcodes(lines)
+    print("Answer to part 2: " + str(execute_test(lines2, op)))

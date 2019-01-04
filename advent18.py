@@ -42,12 +42,35 @@ def change_landscape(area):
     return new_area
 
 
-for i in range(10):
-    area = change_landscape(area)
+def count_resource_value(area):
+    lumberyards = 0
+    trees = 0
+    for a in area:
+        lumberyards += a.count("#")
+        trees += a.count("|")
+    return lumberyards * trees
 
-lumberyards = 0
-trees = 0
-for a in area:
-    lumberyards += a.count("#")
-    trees += a.count("|")
-print(lumberyards * trees)
+
+past_areas = []
+
+
+found = False
+period = 0
+for i in range(1, 20000):
+    if i == 11:
+        print("Answer for part 1 is " + str(count_resource_value(area)))
+    area = change_landscape(area)
+    value = count_resource_value(area)
+
+    if not found:
+        for p in past_areas:
+            if p == area:
+                print("After " + str(i) + " minutes")
+                period = len(past_areas) - past_areas.index(area)
+                print("Area is same as " + str(period) + " minutes ago")
+                found = True
+    else:
+        if i % period == 1000000000 % period:
+            print("Part 2: " + str(value))
+            break
+    past_areas.append(area)
